@@ -4,7 +4,6 @@ package com.stockdelivery.controllers;/*
  *@author  ArunSaiSurapaneni
  */
 
-import com.stockdelivery.exceptions.DematNotFoundException;
 import com.stockdelivery.model.Delivery;
 import com.stockdelivery.model.DeliveryType;
 import com.stockdelivery.model.Demat;
@@ -16,20 +15,23 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import java.time.LocalDate;
 import java.util.List;
 
 @RestController
 @RequestMapping("/demat-api")
-public class DematResponseController {
+public class DematController {
     private final IDematService dematService;
 
-    public DematResponseController(IDematService dematService) {
+    public DematController(IDematService dematService) {
         this.dematService = dematService;
     }
 
-    private final Logger logger = LoggerFactory.getLogger(DematResponseController.class);
+    private final Logger logger = LoggerFactory.getLogger(DematController.class);
 
+    /**
+     * @param demat
+     * @return
+     */
     @PostMapping("/demat")
     public ResponseEntity<List<Demat>> addDemat(Demat demat) {
         HttpHeaders headers = new HttpHeaders();
@@ -38,7 +40,10 @@ public class DematResponseController {
         return ResponseEntity.status(HttpStatus.ACCEPTED).headers(headers).build();
     }
 
-
+    /**
+     * @param demat
+     * @return
+     */
     @PutMapping("/demat")
     public ResponseEntity<List<Demat>> updateDemat(Demat demat) {
         HttpHeaders headers = new HttpHeaders();
@@ -47,6 +52,10 @@ public class DematResponseController {
         return ResponseEntity.status(HttpStatus.ACCEPTED).headers(headers).build();
     }
 
+    /**
+     * @param dematId
+     * @return
+     */
     @DeleteMapping("/demat")
     public ResponseEntity<List<Demat>> deleteDematId(int dematId) {
         HttpHeaders headers = new HttpHeaders();
@@ -56,6 +65,10 @@ public class DematResponseController {
 
     }
 
+    /**
+     * @param dematId
+     * @return
+     */
     @GetMapping("/demat/id/{dematId}")
     public ResponseEntity<List<Demat>> getById(@PathVariable("dematId") int dematId) {
         HttpHeaders headers = new HttpHeaders();
@@ -67,6 +80,10 @@ public class DematResponseController {
 
     }
 
+    /**
+     * @param dematId
+     * @return
+     */
     @GetMapping("/demat/deliveries/dematId/{dematId}")
     public ResponseEntity<List<Delivery>> getByDeliveries(@PathVariable("dematId") int dematId) {
         HttpHeaders headers = new HttpHeaders();
@@ -77,6 +94,11 @@ public class DematResponseController {
         return propertyResponse;
     }
 
+    /**
+     * @param dematId
+     * @param type
+     * @return
+     */
     @GetMapping("/demat/dematId/{dematId}/type/{type}")
     public ResponseEntity<List<Delivery>> getByType(@PathVariable("dematId") int dematId, @PathVariable("type") DeliveryType type) {
         HttpHeaders headers = new HttpHeaders();
@@ -87,6 +109,12 @@ public class DematResponseController {
         return propertyResponse;
     }
 
+    /**
+     * @param dematId
+     * @param start
+     * @param end
+     * @return
+     */
 
     @GetMapping("/demat/dematId/{dematId}/startDate/{start}/endDate/{end}")
     public ResponseEntity<List<Delivery>> getBetweenDates(@PathVariable("dematId") int dematId, @PathVariable("start") String start, @PathVariable("end") String end) {
@@ -98,6 +126,11 @@ public class DematResponseController {
         return propertyResponse;
     }
 
+    /**
+     * @param dematId
+     * @param date
+     * @return
+     */
     @GetMapping("/demat/dematId/{dematId}/date/{date}")
     public ResponseEntity<List<Delivery>> getByIDDate(@PathVariable("dematId") int dematId, @PathVariable("date") String date) {
         HttpHeaders headers = new HttpHeaders();

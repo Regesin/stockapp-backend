@@ -22,28 +22,66 @@ public class TypeServiceImpl implements ITypeService {
         this.typeRepository = typeRepository;
     }
 
+    /**
+     * @param type
+     */
     @Override
     public void addType(Type type) {
         typeRepository.save(type);
     }
 
+    /**
+     * @param type
+     */
     @Override
     public void updateType(Type type) {
         typeRepository.save(type);
     }
 
+    /**
+     * @param typeId
+     * @throws TypeNotFoundException
+     */
     @Override
     public void deleteType(int typeId) throws TypeNotFoundException {
         typeRepository.deleteById(typeId);
     }
 
+    /**
+     * @param typeId
+     * @return
+     * @throws TypeNotFoundException
+     */
     @Override
     public Type getById(int typeId) throws TypeNotFoundException {
         return typeRepository.findById(typeId).get();
     }
 
+    /**
+     * @return
+     * @throws TypeNotFoundException
+     */
     @Override
     public List<Type> getAll() throws TypeNotFoundException {
         return typeRepository.findAll();
+    }
+
+    /**
+     * @param name
+     * @return
+     * @throws TypeNotFoundException
+     */
+    @Override
+    public List<Type> getByName(String name) throws TypeNotFoundException {
+        return typeRepository.getByName(name);
+    }
+
+    /**
+     * @return
+     * @throws TypeNotFoundException
+     */
+    @Override
+    public List<Type> getByExpiryDate() throws TypeNotFoundException {
+        return typeRepository.getByExpiryDate();
     }
 }

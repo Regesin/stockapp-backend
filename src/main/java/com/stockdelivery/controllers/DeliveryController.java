@@ -13,20 +13,23 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import java.time.LocalDate;
 import java.util.List;
 
 @RestController
 @RequestMapping("delivery-api")
-public class DeliveryResponseController {
+public class DeliveryController {
     private final IDeliveryService deliveryService;
 
-    public DeliveryResponseController(IDeliveryService deliveryService) {
+    public DeliveryController(IDeliveryService deliveryService) {
         this.deliveryService = deliveryService;
     }
 
-    private final Logger logger = LoggerFactory.getLogger(DeliveryResponseController.class);
+    private final Logger logger = LoggerFactory.getLogger(DeliveryController.class);
 
+    /**
+     * @param delivery
+     * @return
+     */
     @PostMapping("/deliveries")
     public ResponseEntity<List<Delivery>> addDelivery(@RequestBody Delivery delivery) {
         HttpHeaders headers = new HttpHeaders();
@@ -35,6 +38,10 @@ public class DeliveryResponseController {
         return ResponseEntity.status(HttpStatus.ACCEPTED).headers(headers).build();
     }
 
+    /**
+     * @param delivery
+     * @return
+     */
     @PutMapping("/deliveries")
     public ResponseEntity<List<Delivery>> updateDelivery(@RequestBody Delivery delivery) {
         HttpHeaders headers = new HttpHeaders();
@@ -43,6 +50,10 @@ public class DeliveryResponseController {
         return ResponseEntity.status(HttpStatus.ACCEPTED).headers(headers).build();
     }
 
+    /**
+     * @param deliveryId
+     * @return
+     */
     @DeleteMapping("/deliveries/{deliveryId}")
     public ResponseEntity<List<Delivery>> deleteDelivery(@PathVariable("deliveryId") int deliveryId) {
         HttpHeaders headers = new HttpHeaders();
@@ -51,7 +62,10 @@ public class DeliveryResponseController {
         return ResponseEntity.status(HttpStatus.ACCEPTED).headers(headers).build();
     }
 
-    //Not working
+    /**
+     * @param deliveryId
+     * @return
+     */
     @GetMapping("/deliveries/deliveryId/{deliveryId}")
     public ResponseEntity<List<Delivery>> findById(@PathVariable("deliveryId") int deliveryId) {
         HttpHeaders headers = new HttpHeaders();
@@ -60,6 +74,9 @@ public class DeliveryResponseController {
         return ResponseEntity.status(HttpStatus.OK).headers(headers).build();
     }
 
+    /**
+     * @return
+     */
     @GetMapping("/deliveries")
     public ResponseEntity<List<Delivery>> findAll() {
         HttpHeaders headers = new HttpHeaders();
@@ -70,6 +87,10 @@ public class DeliveryResponseController {
         return deliveryResponse;
     }
 
+    /**
+     * @param dematId
+     * @return
+     */
     @GetMapping("/deliveries/dematId/{dematId}")
     public ResponseEntity<List<Delivery>> findByDematId(@PathVariable("dematId") int dematId) {
         HttpHeaders headers = new HttpHeaders();
@@ -80,6 +101,10 @@ public class DeliveryResponseController {
         return deliveryResponse;
     }
 
+    /**
+     * @param dematId
+     * @return
+     */
     @GetMapping("/deliveries/netAmount/{dematId}")
     public ResponseEntity<List<Delivery>> findNetAmount(@PathVariable("dematId") int dematId) {
         HttpHeaders headers = new HttpHeaders();
@@ -90,7 +115,10 @@ public class DeliveryResponseController {
         return deliveryResponse;
     }
 
-    // not working
+    /**
+     * @param date
+     * @return
+     */
     @GetMapping("/deliveries/orderDate/{date}")
     public ResponseEntity<List<Delivery>> findByOrderDate(@PathVariable("date") String date) {
         HttpHeaders headers = new HttpHeaders();
@@ -101,6 +129,10 @@ public class DeliveryResponseController {
         return deliveryResponse;
     }
 
+    /**
+     * @param type
+     * @return
+     */
     @GetMapping("/deliveries/type/{type}")
     public ResponseEntity<List<Delivery>> findByType(@PathVariable("type") String type) {
         HttpHeaders headers = new HttpHeaders();

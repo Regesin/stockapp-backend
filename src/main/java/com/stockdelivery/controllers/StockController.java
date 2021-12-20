@@ -19,16 +19,20 @@ import java.util.List;
 
 @RestController
 @RequestMapping("stock-api")
-public class StockResponseController {
+public class StockController {
 
     private final IStockService stockService;
 
-    public StockResponseController(IStockService stockService) {
+    public StockController(IStockService stockService) {
         this.stockService = stockService;
     }
 
-    private final Logger logger = LoggerFactory.getLogger(StockResponseController.class);
+    private final Logger logger = LoggerFactory.getLogger(StockController.class);
 
+    /**
+     * @param stock
+     * @return
+     */
     @PostMapping("/stocks")
     public ResponseEntity<List<Stock>> addStock(@RequestBody Stock stock) {
         HttpHeaders headers = new HttpHeaders();
@@ -38,6 +42,10 @@ public class StockResponseController {
 
     }
 
+    /**
+     * @param stock
+     * @return
+     */
     @PutMapping("/stocks")
     public ResponseEntity<List<Stock>> updateStock(@RequestBody Stock stock) {
         HttpHeaders headers = new HttpHeaders();
@@ -47,6 +55,10 @@ public class StockResponseController {
 
     }
 
+    /**
+     * @param stockId
+     * @return
+     */
     @DeleteMapping("/stocks/{stockId}")
     public ResponseEntity<List<Stock>> deleteStock(@PathVariable("stockId") int stockId) {
         HttpHeaders headers = new HttpHeaders();
@@ -56,6 +68,10 @@ public class StockResponseController {
 
     }
 
+    /**
+     * @param stockId
+     * @return
+     */
     @GetMapping("/stocks/stockId/{stockId}")
     public ResponseEntity<List<Stock>> findById(@PathVariable("stockId") int stockId) {
         HttpHeaders headers = new HttpHeaders();
@@ -65,6 +81,9 @@ public class StockResponseController {
         return stockResponse;
     }
 
+    /**
+     * @return
+     */
     @GetMapping("/stocks")
     ResponseEntity<List<Stock>> findAll() {
         HttpHeaders headers = new HttpHeaders();
@@ -75,6 +94,10 @@ public class StockResponseController {
 
     }
 
+    /**
+     * @param typeId
+     * @return
+     */
     @GetMapping("/stocks/type/{typeId}")
     ResponseEntity<List<Stock>> findByType(@PathVariable("typeId") int typeId) {
         HttpHeaders headers = new HttpHeaders();
@@ -85,6 +108,10 @@ public class StockResponseController {
 
     }
 
+    /**
+     * @param price
+     * @return
+     */
     @GetMapping("/stocks/lesserPrice/{price}")
     ResponseEntity<List<Stock>> findByLesserPrice(@PathVariable("price") double price) {
         HttpHeaders headers = new HttpHeaders();
@@ -95,6 +122,10 @@ public class StockResponseController {
 
     }
 
+    /**
+     * @param price
+     * @return
+     */
     @GetMapping("/stocks/greaterPrice/{price}")
     ResponseEntity<List<Stock>> findByGreaterPrice(@PathVariable("price") double price) {
         HttpHeaders headers = new HttpHeaders();
@@ -105,17 +136,25 @@ public class StockResponseController {
 
     }
 
+    /**
+     * @param name
+     * @return
+     */
     @GetMapping("/stocks/name/{name}")
-    ResponseEntity<List<Stock>> findByStockName(@PathVariable("name") String name) {
+    ResponseEntity<List<Stock>> findByName(@PathVariable("name") String name) {
         HttpHeaders headers = new HttpHeaders();
         headers.add("desc", "Finding Name of the Stock");
-        Stock stocks = stockService.getByStockName(name);
+        List<Stock> stocks = stockService.getByName(name);
         ResponseEntity<List<Stock>> stockResponse = new ResponseEntity(stocks, headers, HttpStatus.OK);
         return stockResponse;
 
 
     }
 
+    /**
+     * @param stockId
+     * @return
+     */
     @GetMapping("/stocks/volume/{stockId}")
     ResponseEntity<List<Stock>> findByVolume(@PathVariable("stockId") int stockId) {
         HttpHeaders headers = new HttpHeaders();
@@ -125,6 +164,10 @@ public class StockResponseController {
         return stockResponse;
     }
 
+    /**
+     * @param typeId
+     * @return
+     */
     @GetMapping("/stocks/expiryDate/{typeId}")
     ResponseEntity<List<Stock>> findByExpiryDate(@PathVariable("typeId") int typeId) {
         HttpHeaders headers = new HttpHeaders();

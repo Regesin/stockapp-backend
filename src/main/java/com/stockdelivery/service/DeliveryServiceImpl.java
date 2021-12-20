@@ -16,7 +16,7 @@ import java.time.format.DateTimeFormatter;
 import java.util.List;
 
 @Service
-public class DeliveryServiceImpl implements IDeliveryService{
+public class DeliveryServiceImpl implements IDeliveryService {
 
     private IDeliveryRepository deliveryRepository;
 
@@ -25,41 +25,73 @@ public class DeliveryServiceImpl implements IDeliveryService{
         this.deliveryRepository = deliveryRepository;
     }
 
+    /**
+     * @param delivery
+     */
     @Override
     public void addDelivery(Delivery delivery) {
         deliveryRepository.save(delivery);
     }
 
+    /**
+     * @param delivery
+     * @throws DeliveryNotFoundException
+     */
     @Override
     public void updateDelivery(Delivery delivery) throws DeliveryNotFoundException {
         deliveryRepository.save(delivery);
     }
 
+    /**
+     * @param deliveryId
+     * @throws DeliveryNotFoundException
+     */
     @Override
     public void deleteDelivery(int deliveryId) throws DeliveryNotFoundException {
         deliveryRepository.deleteById(deliveryId);
     }
 
+    /**
+     * @param deliveryId
+     * @return
+     * @throws DeliveryNotFoundException
+     */
     @Override
     public Delivery getById(int deliveryId) throws DeliveryNotFoundException {
         return deliveryRepository.findById(deliveryId);
     }
 
+    /**
+     * @return
+     */
     @Override
     public List<Delivery> getAll() {
         return deliveryRepository.findAll();
     }
 
+    /**
+     * @param dematId
+     * @return
+     * @throws DematNotFoundException
+     */
     @Override
     public List<Delivery> getByDematId(int dematId) throws DematNotFoundException {
         return deliveryRepository.findByDematId(dematId);
     }
 
+    /**
+     * @param dematId
+     * @return
+     */
     @Override
     public List<Delivery> getNetAmount(int dematId) {
         return deliveryRepository.findByNetAmount(dematId);
     }
 
+    /**
+     * @param date
+     * @return
+     */
     @Override
     public List<Delivery> getByOrderDate(String date) {
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd-MM-yyyy");
@@ -68,6 +100,10 @@ public class DeliveryServiceImpl implements IDeliveryService{
         return deliveryRepository.findByOrderDate(startDate);
     }
 
+    /**
+     * @param type
+     * @return
+     */
     @Override
     public List<Delivery> getByType(String type) {
         return deliveryRepository.findByType(type);

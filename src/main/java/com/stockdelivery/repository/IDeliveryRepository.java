@@ -17,26 +17,40 @@ import java.util.List;
 
 @Repository
 public interface IDeliveryRepository extends JpaRepository<Delivery, Integer> {
-
+    /**
+     * @param dematId
+     * @return
+     */
     @Query("from Delivery d inner join d.demat de where de.dematId = ?1")
     List<Delivery> findByDematId(int dematId);
 
+    /**
+     * @param dematId
+     * @return
+     */
     @Query(value = "select deliveryid, sum(deliveryquantity), orderdate, sum(totalprice) as netamount from type where dematid = ?1 ORDER BY orderdate", nativeQuery = true)
     List<Delivery> findByNetAmount(int dematId);
 
-    //    @Query(value = "select * from delivery where orderdate = ?1", nativeQuery = true)
+    /**
+     * @param date
+     * @return
+     */
     @Query("from Delivery d where d.orderDate =?1")
     List<Delivery> findByOrderDate(LocalDate date);
 
-//    @Query("from Delivery d where d.type = ?1")
-//    @Query("from Delivery d where d.type = ?1 ORDER BY d.orderDate")
+    /**
+     * @param type
+     * @return
+     */
 
-    @Query(value = "select * from delivery where type = ?1 ORDER BY orderdate", nativeQuery = true)
+    @Query("from Delivery d where d.type = ?1 order by d.orderDate")
     List<Delivery> findByType(String type);
 
-
-    //    @Query("from Delivery d where d.deliveryId = ?1")
-    @Query(value = "select * from delivery where deliveryId = ?1", nativeQuery = true)
+    /**
+     * @param deliveryId
+     * @return
+     */
+    @Query("from Delivery d where d.deliveryId = ?1")
     Delivery findById(int deliveryId);
 
 
